@@ -39,10 +39,10 @@ import haxe.macro.Expr;
 		
 		ManifestResources.init (config);
 		
-		app.meta["build"] = "96";
+		app.meta["build"] = "102";
 		app.meta["company"] = "Company Name";
 		app.meta["file"] = "CardMatching";
-		app.meta["name"] = "Firework";
+		app.meta["name"] = "Fireworks";
 		app.meta["packageName"] = "com.sample.cardmatching";
 		app.meta["version"] = "1.0.0";
 		
@@ -65,7 +65,7 @@ import haxe.macro.Expr;
 			minimized: false,
 			parameters: {},
 			resizable: true,
-			title: "Firework",
+			title: "Fireworks",
 			width: 0,
 			x: null,
 			y: null,

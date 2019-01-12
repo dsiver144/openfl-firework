@@ -893,9 +893,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","96");
+		_this.setReserved("build","102");
 	} else {
-		_this.h["build"] = "96";
+		_this.h["build"] = "102";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -911,9 +911,9 @@ ApplicationMain.create = function(config) {
 	}
 	var _this3 = app.meta;
 	if(__map_reserved["name"] != null) {
-		_this3.setReserved("name","Firework");
+		_this3.setReserved("name","Fireworks");
 	} else {
-		_this3.h["name"] = "Firework";
+		_this3.h["name"] = "Fireworks";
 	}
 	var _this4 = app.meta;
 	if(__map_reserved["packageName"] != null) {
@@ -927,7 +927,7 @@ ApplicationMain.create = function(config) {
 	} else {
 		_this5.h["version"] = "1.0.0";
 	}
-	var attributes = { allowHighDPI : false, alwaysOnTop : false, borderless : false, element : null, frameRate : 60, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "Firework", width : 0, x : null, y : null};
+	var attributes = { allowHighDPI : false, alwaysOnTop : false, borderless : false, element : null, frameRate : 60, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "Fireworks", width : 0, x : null, y : null};
 	attributes.context = { antialiasing : 0, background : 16777215, colorDepth : 32, depth : true, hardware : true, stencil : true, type : null, vsync : false};
 	if(app.__window == null) {
 		if(config != null) {
@@ -4162,7 +4162,7 @@ var Main = function() {
 	var v1 = new MyVector(10,10);
 	var v2 = new MyVector(2,4);
 	v1.addTo(v2).multiplyBy(2);
-	haxe_Log.trace(v1,{ fileName : "Main.hx", lineNumber : 25, className : "Main", methodName : "new"});
+	haxe_Log.trace(v1,{ fileName : "Main.hx", lineNumber : 26, className : "Main", methodName : "new"});
 	var data = new openfl_display_BitmapData(1,1,false,65280);
 	var tileset = new openfl_display_Tileset(data,[new openfl_geom_Rectangle(0,0,1,1)]);
 	this.tilemap = new openfl_display_Tilemap(this.stage.stageWidth,this.stage.stageHeight,tileset);
@@ -4172,7 +4172,7 @@ var Main = function() {
 	var _g = 0;
 	while(_g < 5) {
 		var i = _g++;
-		this.createFirework(Math.random() * this.stage.stageWidth,600,14 + Math.random() * 4,-Math.PI / 2,0.5,false);
+		this.createFirework(Math.random() * this.stage.stageWidth,600,14 + Math.random() * 4,-Math.PI / 2,Main.GRAVITY,false);
 	}
 };
 $hxClasses["Main"] = Main;
@@ -4196,7 +4196,7 @@ Main.prototype = $extend(openfl_display_Sprite.prototype,{
 		var length = Math.sqrt(_this1.x * _this1.x + _this1.y * _this1.y);
 		_this1.x = Math.cos(angle) * length;
 		_this1.y = Math.sin(angle) * length;
-		haxe_Log.trace(tile.velocity,{ fileName : "Main.hx", lineNumber : 51, className : "Main", methodName : "createFirework"});
+		haxe_Log.trace(tile.velocity,{ fileName : "Main.hx", lineNumber : 52, className : "Main", methodName : "createFirework"});
 		tile.setGravity(gravity);
 		this.tilemap.addTile(tile);
 		this.fireworks.push(tile);
@@ -4212,23 +4212,22 @@ Main.prototype = $extend(openfl_display_Sprite.prototype,{
 				var _g2 = 0;
 				while(_g2 < 10) {
 					var i = _g2++;
-					this.createFirework(particle.get_x(),particle.get_y(),5 + Math.random() * 5,Math.random() * Math.PI * 2,0.5,true);
+					this.createFirework(particle.get_x(),particle.get_y(),5 + Math.random() * 5,Math.random() * Math.PI * 2,Main.GRAVITY,true);
 				}
-				this.createFirework(Math.random() * this.stage.stageWidth,600,14 + Math.random() * 4,-Math.PI / 2,0.5,false);
 				this.tilemap.removeTile(particle);
 				particle.explosed = true;
 			}
 			if(particle.child == true) {
 				var _g21 = particle;
-				_g21.set_alpha(_g21.get_alpha() - 0.05);
+				_g21.set_alpha(_g21.get_alpha() - 0.03);
 			}
 			if(particle.position.y > this.stage.stageHeight) {
 				if(particle.child == false) {
-					HxOverrides.remove(this.fireworks,particle);
+					this.createFirework(Math.random() * this.stage.stageWidth,600,14 + Math.random() * 8,-Math.PI / 2,0.5,false);
 				}
+				HxOverrides.remove(this.fireworks,particle);
 				this.tilemap.removeTile(particle);
 			}
-			haxe_Log.trace(particle,{ fileName : "Main.hx", lineNumber : 83, className : "Main", methodName : "onEnterFrame"});
 		}
 	}
 	,__class__: Main
@@ -25987,7 +25986,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 720155;
+	this.version = 796151;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = ["lime","utils","AssetCache"];
@@ -75419,6 +75418,7 @@ openfl_display_DisplayObject.__tempStack = new lime_utils_ObjectPool(function() 
 },function(stack) {
 	stack.set_length(0);
 });
+Main.GRAVITY = 0.4;
 haxe_Serializer.USE_CACHE = false;
 haxe_Serializer.USE_ENUM_INDEX = false;
 haxe_Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
