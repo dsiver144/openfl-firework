@@ -893,9 +893,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","95");
+		_this.setReserved("build","96");
 	} else {
-		_this.h["build"] = "95";
+		_this.h["build"] = "96";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -911,9 +911,9 @@ ApplicationMain.create = function(config) {
 	}
 	var _this3 = app.meta;
 	if(__map_reserved["name"] != null) {
-		_this3.setReserved("name","CardMatching");
+		_this3.setReserved("name","Firework");
 	} else {
-		_this3.h["name"] = "CardMatching";
+		_this3.h["name"] = "Firework";
 	}
 	var _this4 = app.meta;
 	if(__map_reserved["packageName"] != null) {
@@ -927,7 +927,7 @@ ApplicationMain.create = function(config) {
 	} else {
 		_this5.h["version"] = "1.0.0";
 	}
-	var attributes = { allowHighDPI : false, alwaysOnTop : false, borderless : false, element : null, frameRate : 60, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "CardMatching", width : 0, x : null, y : null};
+	var attributes = { allowHighDPI : false, alwaysOnTop : false, borderless : false, element : null, frameRate : 60, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "Firework", width : 0, x : null, y : null};
 	attributes.context = { antialiasing : 0, background : 16777215, colorDepth : 32, depth : true, hardware : true, stencil : true, type : null, vsync : false};
 	if(app.__window == null) {
 		if(config != null) {
@@ -25987,7 +25987,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 808158;
+	this.version = 720155;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = ["lime","utils","AssetCache"];
