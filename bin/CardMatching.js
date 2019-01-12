@@ -893,9 +893,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","148");
+		_this.setReserved("build","1");
 	} else {
-		_this.h["build"] = "148";
+		_this.h["build"] = "1";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -4158,22 +4158,37 @@ openfl_display_Sprite.prototype = $extend(openfl_display_DisplayObjectContainer.
 	,__class__: openfl_display_Sprite
 });
 var Main = function() {
+	this.particleCount = 0;
+	this.frameCount = 0;
+	this.textColor = 0;
 	Main.instance = this;
 	openfl_display_Sprite.call(this);
-	var v1 = new MyVector(10,10);
-	var v2 = new MyVector(2,4);
-	v1.addTo(v2).multiplyBy(2);
-	haxe_Log.trace(v1,{ fileName : "Main.hx", lineNumber : 29, className : "Main", methodName : "new"});
-	this.addChild(new openfl_display_FPS());
-	var data = new openfl_display_BitmapData(1,1,false,65280);
+	this.get_graphics().beginFill(0,1.0);
+	this.get_graphics().drawRect(0,0,this.stage.stageWidth,this.stage.stageHeight);
+	this.get_graphics().endFill();
+	var fps = new openfl_display_FPS();
+	fps.set_textColor(16777215);
+	this.addChild(fps);
+	this.happyNewYearText = new openfl_text_TextField();
+	this.happyNewYearText.set_text("Happy New Year!");
+	this.happyNewYearText.set_textColor(16721152);
+	this.happyNewYearText.set_scaleX(5);
+	this.happyNewYearText.set_scaleY(5);
+	this.happyNewYearText.set_alpha(0.8);
+	this.happyNewYearText.set_x((this.stage.stageWidth - this.happyNewYearText.get_width()) / 2);
+	this.happyNewYearText.set_y(10);
+	this.addChild(this.happyNewYearText);
+	var data = new openfl_display_BitmapData(1,1);
 	var tileset = new openfl_display_Tileset(data,[new openfl_geom_Rectangle(0,0,1,1)]);
 	this.tilemap = new openfl_display_Tilemap(this.stage.stageWidth,this.stage.stageHeight,tileset);
 	this.fireworks = [];
 	this.addChild(this.tilemap);
-	this.addEventListener("enterFrame",$bind(this,this.onEnterFrame));
-	var _g = 0;
-	while(_g < 5) {
-		var i = _g++;
+	this.stage.addEventListener("enterFrame",$bind(this,this.onEnterFrame));
+	var number = 15;
+	var _g1 = 0;
+	var _g = number;
+	while(_g1 < _g) {
+		var i = _g1++;
 		var addtion = Math.random() > 0.5 ? Math.random() * Math.PI / 6 : -Math.random() * Math.PI / 6;
 		this.createFirework(Math.random() * this.stage.stageWidth,600,14 + Math.random() * 10,-Math.PI / 2 + addtion,0.5,false);
 	}
@@ -4184,16 +4199,27 @@ Main.__super__ = openfl_display_Sprite;
 Main.prototype = $extend(openfl_display_Sprite.prototype,{
 	tilemap: null
 	,fireworks: null
+	,textColor: null
+	,happyNewYearText: null
+	,frameCount: null
+	,particleCount: null
 	,addParticle: function(particle) {
 		this.tilemap.addTile(particle);
 		this.fireworks.push(particle);
 	}
-	,createFirework: function(x,y,speed,angle,gravity,child) {
+	,createFirework: function(x,y,speed,angle,gravity,child,color) {
+		if(this.particleCount > 15) {
+			return;
+		}
 		var tile = new MyParticle(0,x,y,child);
-		tile.set_scaleX(5.0);
-		tile.set_scaleY(5.0);
+		tile.set_scaleX(3.0);
+		tile.set_scaleY(3.0);
 		var ct = new openfl_geom_ColorTransform();
-		ct.set_color(Math.floor(16777215 * Math.random()));
+		if(color == null) {
+			ct.set_color(Math.floor(16777215 * Math.random()));
+		} else {
+			ct.set_color(color);
+		}
 		tile.set_colorTransform(ct);
 		var _this = tile.velocity;
 		var angle1 = Math.atan2(_this.y,_this.x);
@@ -4206,8 +4232,12 @@ Main.prototype = $extend(openfl_display_Sprite.prototype,{
 		tile.setGravity(gravity);
 		this.tilemap.addTile(tile);
 		this.fireworks.push(tile);
+		if(child == false) {
+			this.particleCount += 1;
+		}
 	}
 	,onEnterFrame: function(e) {
+		this.frameCount += 1;
 		var _g = 0;
 		var _g1 = this.fireworks;
 		while(_g < _g1.length) {
@@ -4216,9 +4246,13 @@ Main.prototype = $extend(openfl_display_Sprite.prototype,{
 			particle.update();
 			if(particle.velocity.y > -1 && particle.explosed == false && particle.child == false) {
 				var _g2 = 0;
-				while(_g2 < 20) {
+				while(_g2 < 30) {
 					var i = _g2++;
-					this.createFirework(particle.get_x(),particle.get_y(),5 + Math.random() * 2,Math.random() * Math.PI * 2,Main.GRAVITY,true);
+					this.createFirework(particle.get_x(),particle.get_y(),4 + Math.random() * 6,Math.random() * Math.PI * 2,Main.GRAVITY,true,particle.get_colorTransform().get_color());
+				}
+				if(Math.random() > 0.9) {
+					var addtion = Math.random() > 0.5 ? Math.random() * Math.PI / 6 : -Math.random() * Math.PI / 6;
+					this.createFirework(particle.get_x(),particle.get_y(),10 + Math.random() * 5,-Math.PI / 2 + addtion,0.5,false);
 				}
 				this.tilemap.removeTile(particle);
 				particle.explosed = true;
@@ -4231,9 +4265,10 @@ Main.prototype = $extend(openfl_display_Sprite.prototype,{
 				}
 			}
 			if(particle.position.y > this.stage.stageHeight * 0.8 && particle.explosed == true && particle.spawned == false) {
-				var addtion = Math.random() > 0.5 ? Math.random() * Math.PI / 6 : -Math.random() * Math.PI / 6;
-				this.createFirework(Math.random() * this.stage.stageWidth,600,14 + Math.random() * 10,-Math.PI / 2 + addtion,0.5,false);
+				var addtion1 = Math.random() > 0.5 ? Math.random() * Math.PI / 6 : -Math.random() * Math.PI / 6;
+				this.createFirework(Math.random() * this.stage.stageWidth,600,14 + Math.random() * 10,-Math.PI / 2 + addtion1,0.5,false);
 				particle.spawned = true;
+				this.particleCount -= 1;
 			}
 			if(particle.position.y > this.stage.stageHeight) {
 				HxOverrides.remove(this.fireworks,particle);
@@ -26012,7 +26047,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 464014;
+	this.version = 387709;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = ["lime","utils","AssetCache"];
