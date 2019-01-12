@@ -4208,7 +4208,7 @@ Main.prototype = $extend(openfl_display_Sprite.prototype,{
 		this.fireworks.push(particle);
 	}
 	,createFirework: function(x,y,speed,angle,gravity,child,color) {
-		if(this.particleCount > 15) {
+		if(this.particleCount > 30 && child == false) {
 			return;
 		}
 		var tile = new MyParticle(0,x,y,child);
@@ -4250,7 +4250,7 @@ Main.prototype = $extend(openfl_display_Sprite.prototype,{
 					var i = _g2++;
 					this.createFirework(particle.get_x(),particle.get_y(),4 + Math.random() * 6,Math.random() * Math.PI * 2,Main.GRAVITY,true,particle.get_colorTransform().get_color());
 				}
-				if(Math.random() > 0.9) {
+				if(Math.random() > 0.7) {
 					var addtion = Math.random() > 0.5 ? Math.random() * Math.PI / 6 : -Math.random() * Math.PI / 6;
 					this.createFirework(particle.get_x(),particle.get_y(),10 + Math.random() * 5,-Math.PI / 2 + addtion,0.5,false);
 				}
@@ -26047,7 +26047,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 387709;
+	this.version = 302147;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = ["lime","utils","AssetCache"];
