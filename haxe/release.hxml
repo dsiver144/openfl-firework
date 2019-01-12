@@ -15,6 +15,7 @@
 -D lime-dom
 -D lime-howlerjs
 -D lime-html5
+-D fdb
 -D html5
 -D web
 --remap flash:openfl

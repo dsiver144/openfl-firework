@@ -4212,8 +4212,9 @@ Main.prototype = $extend(openfl_display_Sprite.prototype,{
 			return;
 		}
 		var tile = new MyParticle(0,x,y,child);
-		tile.set_scaleX(3.0);
-		tile.set_scaleY(3.0);
+		var randomScale = Math.random() * 2.0;
+		tile.set_scaleX(1.0 + randomScale);
+		tile.set_scaleY(1.0 + randomScale);
 		var ct = new openfl_geom_ColorTransform();
 		if(color == null) {
 			ct.set_color(Math.floor(16777215 * Math.random()));
@@ -26047,7 +26048,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 302147;
+	this.version = 28880;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = ["lime","utils","AssetCache"];
